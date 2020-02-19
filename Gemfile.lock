@@ -242,7 +242,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   bootstrap-sass
   byebug
@@ -254,7 +254,7 @@ DEPENDENCIES
   minitest
   minitest-reporters
   puma (~> 4.1)
-  rails (~> 6.0.2, >= 6.0.2.1)
+  rails
   rails-controller-testing
   sass-rails (>= 6)
   spring
