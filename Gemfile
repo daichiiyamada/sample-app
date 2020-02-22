@@ -21,7 +21,10 @@ gem 'jbuilder', github: 'rails/jbuilder', branch: 'master'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'faker'
+# gem 'faker'
+gem 'faker-okinawa'
+gem 'carrierwave'
+gem 'mini_magick'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -65,6 +68,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'fog'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
