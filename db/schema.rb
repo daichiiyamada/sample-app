@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_072646) do
+ActiveRecord::Schema.define(version: 2020_02_27_071556) do
+
+  create_table "mentions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["micropost_id"], name: "index_mentions_on_micropost_id"
+    t.index ["user_id", "micropost_id"], name: "index_mentions_on_user_id_and_micropost_id", unique: true
+    t.index ["user_id"], name: "index_mentions_on_user_id"
+  end
 
   create_table "microposts", force: :cascade do |t|
     t.text "content"
@@ -45,7 +55,9 @@ ActiveRecord::Schema.define(version: 2020_02_22_072646) do
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
   add_foreign_key "microposts", "users"

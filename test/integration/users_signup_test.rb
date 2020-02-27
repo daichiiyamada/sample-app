@@ -12,7 +12,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: { name:  "",
                                          email: "user@invalid",
                                          password:              "foo",
-                                         password_confirmation: "bar" } }
+                                         password_confirmation: "bar",
+                                         user_name: "example" } }
     end
     assert_template 'users/new'
   end
@@ -23,7 +24,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: { name:  "Example User",
                                          email: "user@example.com",
                                          password:              "password",
-                                         password_confirmation: "password" } }
+                                         password_confirmation: "password",
+                                         user_name: "example" } }
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
     user = assigns(:user)

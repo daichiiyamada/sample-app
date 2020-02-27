@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar", user_name: "example")
   end
 
   test "should be valid" do
@@ -50,6 +50,16 @@ class UserTest < ActiveSupport::TestCase
   test "email addresses should be unique" do
     duplicate_user = @user.dup
     duplicate_user.email = @user.email.upcase
+    duplicate_user.user_name = "duplicateUser"
+    @user.save
+    duplicate_user.save
+    assert_not duplicate_user.valid?
+  end
+
+  test "user_name should be unique" do
+    duplicate_user = @user.dup
+    duplicate_user.email = "test@example.com"
+    duplicate_user.user_name = @user.user_name
     @user.save
     assert_not duplicate_user.valid?
   end
@@ -109,6 +119,38 @@ class UserTest < ActiveSupport::TestCase
     # フォローしていないユーザーの投稿を確認
     archer.microposts.each do |post_unfollowed|
       assert_not michael.feed.include?(post_unfollowed)
+    end
+    
+    microposts(:reply).save
+    # フォローしていないユーザーからの返信がfeedに含まれるか確認
+    assert michael.feed.include?(archer.microposts.find{|n| n.in_reply_to == 1})
+  end
+
+  test "ユーザー名：存在性に対するバリデーション" do
+    @user.user_name = ""
+    assert_not @user.valid?
+  end
+
+  test "ユーザー名：一意性に対するバリデーション" do
+    duplicate_user = @user.dup
+    duplicate_user.user_name = @user.user_name.upcase
+    @user.save
+    assert_not duplicate_user.valid?
+  end
+
+  test "ユーザー名：使用可能な文字列のバリデーション" do
+    valid_user_names = %w[yutachan taro2 3Shiro Boys2Men]
+    valid_user_names.each do |valid_user_name|
+      @user.user_name = valid_user_name
+      assert @user.valid?, "#{valid_user_name.inspect}は使用可能"
+    end
+  end
+
+  test "ユーザー名：使用不可な文字列のバリデーション" do
+    invalid_user_names = %w[yuta-chan Taro@San 3.sHiro boY.2/meN あいう]
+    invalid_user_names.each do |invalid_user_name|
+      @user.user_name = invalid_user_name
+      assert_not @user.valid?, "#{invalid_user_name.inspect}は使用不可"
     end
   end
 end

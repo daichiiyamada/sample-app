@@ -25,6 +25,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'faker-okinawa'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'rinku'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -33,6 +34,7 @@ gem 'coffee-rails', '5.0.0'
 gem 'jquery-rails'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'active_decorator'
 
 
 # Reduces boot times through caching; required in config/boot.rb
