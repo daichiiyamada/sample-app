@@ -46,6 +46,6 @@ van:
   user: lana
 
 reply:
-  content: "@michaelexample Hello."
+  content: " @michaelexample Hello."
   created_at: <%= 3.days.ago %>
   user: archer

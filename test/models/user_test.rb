@@ -117,13 +117,12 @@ class UserTest < ActiveSupport::TestCase
       assert michael.feed.include?(post_self)
     end
     # フォローしていないユーザーの投稿を確認
-    archer.microposts.each do |post_unfollowed|
-      assert_not michael.feed.include?(post_unfollowed)
+    lana.microposts.each do |post_unfollowed|
+      assert_not archer.feed.include?(post_unfollowed)
     end
-    
-    microposts(:reply).save
-    # フォローしていないユーザーからの返信がfeedに含まれるか確認
-    assert michael.feed.include?(archer.microposts.find{|n| n.in_reply_to == 1})
+
+    # フォローしていないユーザーからのメンションがfeedに含まれるか確認
+    assert michael.feed.include?(microposts(:reply))
   end
 
   test "ユーザー名：存在性に対するバリデーション" do

@@ -27,12 +27,10 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     get root_path
     assert_select 'div.pagination'
     assert_select 'input[type="file"]'
-    # 自分宛の返信投稿の表示
-    assert_select 'a[href=?]', "/users/#{@user.id}", text: "@#{@user.user_name}"
+    # 自分にメンションが付いた投稿の表示
+    assert_select 'a[href=?]', "/users/#{@user.id}"
     # 無効な送信
     post microposts_path, params: { micropost: { content: "" } }
-    assert_select 'div#error_explanation'
-    post microposts_path, params: { micropost: { content: "@fakeuser 必ずエラーになる。" } }
     assert_select 'div#error_explanation'
     # 有効な送信
     content = "#{@reply_to_user.user_name} 有効なユーザーへの返信。"

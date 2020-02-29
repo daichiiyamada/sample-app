@@ -4,6 +4,6 @@ one:
   user_id: 1
   micropost_id: 1
 
-two:
-  user_id: 2
-  micropost_id: 2
+mention_to_michael:
+  user: michael
+  micropost: reply

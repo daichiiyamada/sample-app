@@ -1,18 +1,18 @@
 module MicropostsHelper
     # 投稿内容のuser_nameにリンクを追加する
-    # def add_link_reply_user_name(micropost)
-    #     content = Rinku.auto_link(h(micropost.content))
-    #     if !content.index("@").nil?
-    #         user_name = Micropost.get_user_name(content)
-    #         micropost.content.split("@").join.to_s.split(" ").each do |w|
-    #             user = User.find_by(user_name: w)
-    #             # link_html = link_to "@#{w}", user_path(user.id) unless user.nil?
-    #             content.sub!(/@#{w}/, (link_to "@#{w}", user_path(user.id))) unless user.nil?
-    #         end
-    #     end
-    #     content.gsub!(/\r\n/, "<br>")
-    #     content
-    # end
+    def add_link_reply_user_name(micropost)
+        content = Rinku.auto_link(h(micropost.content))
+        if !content.index("@").nil?
+            user_names = Micropost.get_user_name(content)
+            user_array = User.where(user_name: user_names)
+            user_array.each do |user|
+                # link_html = link_to "@#{w}", user_path(user.id) unless user.nil?
+                content.sub!(/@#{user.user_name}/, (link_to "@#{user.user_name}", user_path(user.id)))
+            end
+        end
+        content.gsub!(/\r\n/, "<br>")
+        content
+    end
 
     def format_comment(content)
         # 返信用の文字列を定義

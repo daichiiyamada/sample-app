@@ -73,9 +73,12 @@ def password_reset_expired?
 end
 
 def feed
+    micropost_id = "SELECT micropost_id FROM mentions
+                    WHERE user_id = :user_id"
     following_ids = "SELECT followed_id FROM relationships
                      WHERE follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids})
+                     OR id IN (#{micropost_id})
                      OR user_id = :user_id", user_id: id)
 end
 
