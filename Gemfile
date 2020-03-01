@@ -26,6 +26,7 @@ gem 'faker-okinawa'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'rinku'
+gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

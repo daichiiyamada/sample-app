@@ -62,6 +62,21 @@ before_action :admin_user,     only: :destroy
     render 'show_follow'
   end
 
+  def auto_complete
+    
+            #  elsif params[:term].match(/(\s@[^\s]+)/)
+            @users = if params[:term].match(/(@[^\s]+)/)
+                puts "elsif内にきたよ"
+                user_name = Micropost.get_user_name(params[:term])
+                users = User.select('user_name').where('user_name LIKE ? AND activated = ?', "%#{user_name[-1]}%", true)
+                puts users
+
+                users.map {|user| {user_name: " @#{user.user_name} "} }
+              end
+              
+    render json: @users.to_json
+  end
+
   private
 
     def user_params

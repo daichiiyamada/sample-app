@@ -1,7 +1,7 @@
 <%= form_for(@micropost) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+    <%= f.text_area :content, placeholder: "Compose new micropost...", id: :micropost_content %>
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
   <span class="picture">
@@ -16,4 +16,42 @@
       alert('Maximum file size is 5MB. Please choose a smaller file.');
     }
   });
+
+  $(function() {
+    $('#micropost_content').autocomplete({
+      source: "/users/auto_complete.json",
+      delay: 500,
+      minLength: 2,
+      focus: function(event, ui) {
+        console.log("focus")
+        return false;
+      },
+      select: function(event, ui) {
+        cursor = $('#micropost_content').get(0).selectionStart;
+        inputText = $("#micropost_content").val();
+        startPosition = inputText.lastIndexOf("@")
+        console.log(startPosition)
+        console.log(cursor)
+        console.log(strDel(inputText, startPosition, cursor))
+        $('#micropost_content').val(strDel(inputText, startPosition, cursor));
+        $('#micropost_content').val(strIns($("#micropost_content").val(), startPosition, ui.item.user_name));
+        // var getData = String($("#micropost_content").val());
+        // $('#micropost_content').val(getData + ui.item.user_name);
+        // console.log("select" + ui)
+        return false;
+      }
+    }).data("ui-autocomplete")._renderItem = function(ul, item) {
+      return $("<li>").attr("data-value", item.user_name).data("ui-autocomplete-item", item).append("<a>" + item.user_name + "</a>").appendTo(ul);
+    };
+  });
+
+  function strIns(str, idx, val){
+    var res = str.slice(0, idx) + val + str.slice(idx);
+    return res;
+  };
+
+  function strDel(str, startIdx, lastIdx){
+    var res = str.slice(0, startIdx) + str.slice(lastIdx+1, -1);
+    return res;
+  };
 </script>
