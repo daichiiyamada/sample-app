@@ -36,4 +36,11 @@ class MicropostTest < ActiveSupport::TestCase
     @micropost.save
     assert @micropost.reload.valid?
   end
+
+  test "返信投稿に対して返信しようとした場合" do
+    micropost = @user.microposts.build(content: "Lorem ipsum", replying: true, in_reply_to: @micropost.id)
+    micropost.save
+    replying_micropost = @user.microposts.build(content: "Lorem ipsum", replying: true, in_reply_to: micropost.id)
+    assert_not replying_micropost.valid?
+  end
 end

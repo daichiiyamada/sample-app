@@ -1,5 +1,9 @@
-<%= form_for(@micropost) do |f| %>
+<%= form_for(@micropost, url: microposts_path, html: {method: 'POST'}) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
+  <%= f.hidden_field :in_reply_to, :value => @micropost.id %>
+  <% if @micropost.id %>
+    <%= f.hidden_field :replying, :value => true %>
+  <% end %>
   <div class="field">
     <%= f.text_area :content, placeholder: "Compose new micropost...", id: :micropost_content %>
   </div>
@@ -23,21 +27,14 @@
       delay: 500,
       minLength: 2,
       focus: function(event, ui) {
-        console.log("focus")
         return false;
       },
       select: function(event, ui) {
         cursor = $('#micropost_content').get(0).selectionStart;
         inputText = $("#micropost_content").val();
         startPosition = inputText.lastIndexOf("@")
-        console.log(startPosition)
-        console.log(cursor)
-        console.log(strDel(inputText, startPosition, cursor))
         $('#micropost_content').val(strDel(inputText, startPosition, cursor));
         $('#micropost_content').val(strIns($("#micropost_content").val(), startPosition, ui.item.user_name));
-        // var getData = String($("#micropost_content").val());
-        // $('#micropost_content').val(getData + ui.item.user_name);
-        // console.log("select" + ui)
         return false;
       }
     }).data("ui-autocomplete")._renderItem = function(ul, item) {

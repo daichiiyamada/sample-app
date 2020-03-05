@@ -1,0 +1,50 @@
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+      <p>
+        @<%= @user.user_name %>
+      </p>
+    </section>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @micropost %>
+        <ol class="microposts">
+            <%= render @micropost %>
+            <span class="reply" id="reply-<%= @micropost.id %>">
+                返信
+            </span>
+            <%= render @reply_microposts %>
+        </ol>
+        <section class="micropost_form" id="micropost_form-<%= @micropost.id %>" style="display:none;">
+            Replying to <%= link_to '@' + @micropost.user.user_name, user_path(@micropost.user_id) %>
+            <%= render 'shared/micropost_form' %>
+        </section>
+    <% end %>
+  </div>
+</div>
+<script>
+$(function(){
+
+    // 返信フォームの表示
+    $("#reply-<%= @micropost.id %>").on('click',function(e) {
+        var id = $(this).attr('id').split('-')[1];
+        console.log(id)
+        $('#micropost_content').val("");
+        var target = $('#micropost_form-' + id);
+        var state = target.css('display');
+        if(state === 'block') {
+        target.css('display', 'none');
+        }
+        else {
+        target.css('display', 'block');
+        }
+    });
+});
+</script>

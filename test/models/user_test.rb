@@ -122,7 +122,7 @@ class UserTest < ActiveSupport::TestCase
     end
 
     # フォローしていないユーザーからのメンションがfeedに含まれるか確認
-    assert michael.feed.include?(microposts(:reply))
+    assert michael.feed.include?(microposts(:mentioned))
   end
 
   test "ユーザー名：存在性に対するバリデーション" do

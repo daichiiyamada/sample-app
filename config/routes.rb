@@ -16,11 +16,12 @@ Rails.application.routes.draw do
     end
     collection do
       get :auto_complete
+      get :taken_user_name
     end
   end
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :microposts,          only: [:create, :destroy]
+  resources :microposts,          only: [:show, :create, :destroy]
   resources :relationships,       only: [:create, :destroy]
 end

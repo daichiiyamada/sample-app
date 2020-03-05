@@ -6,6 +6,7 @@
 
   <%= f.label :user_name %>
   <%= f.text_field :user_name, class: 'form-control' %>
+  <div class="text-danger" id="taken_user_name" style="display:none;">そのユーザー名は使われています。</div>
 
   <%= f.label :email %>
   <%= f.email_field :email, class: 'form-control' %>
@@ -18,3 +19,26 @@
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
+
+<script>
+$("input#user_user_name").change(function(){
+    $.ajax({
+        url: "/users/taken_user_name",
+        type: "GET",
+        data: {user_name : $("input#user_user_name").val()
+                },
+        dataType: "json",
+        success: function(data) {
+          value = $("input#user_user_name").attr('value')
+          if(data.data == value || !data.data){
+            $('#taken_user_name').css('display','none')
+          }else if(data.data){
+            $('#taken_user_name').css('display','block')
+          }
+        },
+        error: function(data) {
+          
+        }
+    });
+});
+</script>

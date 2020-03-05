@@ -1,7 +1,7 @@
 <li id="micropost-<%= micropost.id %>">
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-  <span class="user"><%= link_to micropost.user.name, micropost.user %> @<%= micropost.user.user_name %></span>
-  <span class="content">
+  <div style="width: 100%;"><span class="user"><%= link_to micropost.user.name, micropost.user %> @<%= micropost.user.user_name %></span></div>
+  <span class="content" id="content" style="display: inline-block;">
     <%= raw add_link_reply_user_name(micropost) %>
     <%= image_tag micropost.picture.url if micropost.picture? %>
   </span>
@@ -13,3 +13,15 @@
     <% end %>
   </span>
 </li>
+
+<script>
+$(function(){
+  // 投稿詳細ページへのレンダリング
+  $('#micropost-<%= micropost.id %>').on('click',function(e) {
+    if(!$(e.target).closest('#content').length) {
+      // ターゲット要素の外側をクリックした時の操作
+      location.href = "/microposts/" + <%= micropost.id %>;
+    }
+  });
+});
+</script>

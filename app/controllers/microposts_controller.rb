@@ -2,15 +2,24 @@ class MicropostsController < ApplicationController
     before_action :logged_in_user, only: [:create, :destroy]
     before_action :correct_user,   only: :destroy
 
+    def show
+        @micropost = Micropost.find(params[:id])
+        @reply_microposts = Micropost.where(in_reply_to: params[:id])
+        @user = User.find(@micropost.user_id)
+        redirect_to root_url and return unless @user.activated?
+    end
+
     def create
         @micropost = current_user.microposts.build(micropost_params)
         if @micropost.save
             add_mentions
             flash[:success] = "Micropost created!"
-            redirect_to root_url
+            # redirect_to root_url
+            redirect_back(fallback_location: root_url)
         else
             @feed_items = current_user.feed.paginate(page: params[:page])
-            render 'static_pages/home'
+            path = Rails.application.routes.recognize_path(request.referer)
+            render "#{path[:controller]}/#{path[:action]}"
         end
     end
 
@@ -23,7 +32,7 @@ class MicropostsController < ApplicationController
     private
 
     def micropost_params
-        params.require(:micropost).permit(:content, :picture)
+        params.require(:micropost).permit(:content, :picture, :in_reply_to, :replying)
     end
 
     def correct_user

@@ -63,18 +63,23 @@ before_action :admin_user,     only: :destroy
   end
 
   def auto_complete
-    
-            #  elsif params[:term].match(/(\s@[^\s]+)/)
-            @users = if params[:term].match(/(@[^\s]+)/)
-                puts "elsif内にきたよ"
-                user_name = Micropost.get_user_name(params[:term])
-                users = User.select('user_name').where('user_name LIKE ? AND activated = ?', "%#{user_name[-1]}%", true)
-                puts users
+    @users = if params[:term].match(/(@[^\s]+)/)
+      user_name = Micropost.get_user_name(params[:term])
+      users = User.select('user_name').where('user_name LIKE ? AND activated = ?', "%#{user_name[-1]}%", true)
+      puts users
 
-                users.map {|user| {user_name: " @#{user.user_name} "} }
-              end
-              
+      users.map {|user| {user_name: " @#{user.user_name} "} }
+    end
     render json: @users.to_json
+  end
+
+  def taken_user_name
+    user_name = params[:user_name]
+    if found = User.find_by(user_name: params[:user_name])
+      render json: {status: 200,data: found.user_name}
+    else
+      render json: {status: 404,data: ""}
+    end
   end
 
   private

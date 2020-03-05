@@ -4,7 +4,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @reply_to_user = users(:archer)
-    @reply_micropost = microposts(:reply)
+    @mentioned_micropost = microposts(:mentioned)
   end
 
   test "micropost sidebar count" do
@@ -22,7 +22,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   end
 
   test "micropost interface" do
-    @reply_micropost.save
+    @mentioned_micropost.save
     log_in_as(@user)
     get root_path
     assert_select 'div.pagination'
@@ -52,5 +52,19 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     # 違うユーザーのプロフィールにアクセスする
     get user_path(users(:archer))
     assert_select 'a', { text: 'delete', count: 0 }
+
+    # 投稿への返信
+    get micropost_path(@mentioned_micropost)
+    assert_response :success
+    # 有効な送信
+    assert_difference 'Micropost.count', 1 do
+      post microposts_path, params: { micropost: { content: "mentioned_micropostへの返信" } }
+    end
+    follow_redirect!
+    assert_template 'microposts/_micropost'
+    # 無効な送信
+    post microposts_path, params: { micropost: { content: "" } }
+    assert_template 'microposts/_micropost'
+    assert_select 'div#error_explanation'
   end
 end

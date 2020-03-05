@@ -6,4 +6,4 @@ one:
 
 mention_to_michael:
   user: michael
-  micropost: reply
+  micropost: mentioned

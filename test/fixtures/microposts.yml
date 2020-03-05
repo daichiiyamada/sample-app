@@ -45,7 +45,13 @@ van:
   created_at: <%= 4.hours.ago %>
   user: lana
 
-reply:
+mentioned:
   content: " @michaelexample Hello."
   created_at: <%= 3.days.ago %>
-  user: archer
+  user: sara
+
+replying:
+  content: "How are you?"
+  replying: microposts(:van)
+  created_at: <%= 3.days.ago %>
+  user: sara
