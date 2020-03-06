@@ -36,7 +36,7 @@ gem 'jquery-rails'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'active_decorator'
-
+gem 'counter_culture'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

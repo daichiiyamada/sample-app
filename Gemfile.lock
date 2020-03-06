@@ -69,6 +69,9 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    after_commit_action (1.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     ansi (1.5.0)
     autoprefixer-rails (9.7.4)
       execjs
@@ -108,6 +111,10 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
+    counter_culture (2.3.0)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      after_commit_action (~> 1.0)
     crass (1.0.6)
     declarative (0.0.10)
     declarative-option (0.1.0)
@@ -521,6 +528,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   carrierwave
   coffee-rails (= 5.0.0)
+  counter_culture
   faker-okinawa
   fog
   guard
