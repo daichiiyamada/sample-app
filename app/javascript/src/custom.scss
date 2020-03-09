@@ -1,6 +1,11 @@
+@import '~bootstrap/scss/bootstrap';
 
-@import "bootstrap";
-
+$gray: #808080;
+$gray-light: #777;
+$gray-lighter: #999;
+$gray-darker: #666;
+$gray-medium-light: #888;
+$state-danger-text: #A94342;
 /* mixins, variables, etc. */
 
 @mixin box_sizing {
@@ -10,10 +15,6 @@
 }
 
 /* universal */
-
-body {
-  padding-top: 60px;
-}
 
 section {
   overflow: auto;
@@ -29,6 +30,16 @@ textarea {
     margin-bottom: 10px;
   }
 }
+
+
+.ui-autocomplete {
+  overflow-y: scroll;
+  background: white;
+  height: 30vh;
+  list-style: none;
+  padding-left: 0px;
+}
+
 
 /* typography */
 
@@ -77,29 +88,29 @@ p {
 
 /* footer */
 
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-medium-light;
-  color: $gray-light;
-  a {
-    color: $gray;
-    &:hover {
-      color: $gray-darker;
-    }
-  }
-  small {
-    float: left;
-  }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 15px;
-    }
-  }
-}
+// footer {
+//   margin-top: 45px;
+//   padding-top: 5px;
+//   border-top: 1px solid $gray-medium-light;
+//   color: $gray-light;
+//   a {
+//     color: $gray;
+//     &:hover {
+//       color: $gray-darker;
+//     }
+//   }
+//   small {
+//     float: left;
+//   }
+//   ul {
+//     float: right;
+//     list-style: none;
+//     li {
+//       float: left;
+//       margin-left: 15px;
+//     }
+//   }
+// }
 
 /* miscellaneous */
 
@@ -208,7 +219,7 @@ input {
 }
 
 .field_with_errors {
-  @extend .has-error;
+  // @extend .has-error;
   .form-control {
     color: $state-danger-text;
   }

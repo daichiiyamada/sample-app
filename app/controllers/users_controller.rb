@@ -65,7 +65,7 @@ before_action :admin_user,     only: :destroy
   def auto_complete
     @users = if params[:term].match(/(@[^\s]+)/)
       user_name = Micropost.get_user_name(params[:term])
-      users = User.select('user_name').where('user_name LIKE ? AND activated = ?', "%#{user_name[-1]}%", true)
+      users = User.select('user_name').where('user_name LIKE ? AND activated = ?', "%#{user_name[-1]}%", true).limit(20)
       puts users
 
       users.map {|user| {user_name: " @#{user.user_name} "} }
