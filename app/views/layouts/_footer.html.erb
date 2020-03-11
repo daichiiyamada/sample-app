@@ -1,32 +1,15 @@
-
-<!-- Footer -->
-<footer class="page-footer font-small unique-color-dark pt-4">
-
-  <!-- Footer Elements -->
+<footer class="page-footer font-small pt-4">
   <div class="container">
-
-    <!-- Call to action -->
-    <ul class="list-unstyled list-inline text-center py-2">
+    <ul class="list-unstyled list-inline text-center py-2 footer-list">
       <li class="list-inline-item">
-        <%= link_to "About",   about_path %>
+        <%= link_to "About", about_path %>
       </li>
       <li class="list-inline-item">
         <%= link_to "Contact", contact_path %>
       </li>
-      <li class="list-inline-item">
-        <a href="http://news.railstutorial.org/">News</a>
-      </li>
     </ul>
-    <!-- Call to action -->
-
   </div>
-  <!-- Footer Elements -->
-
-  <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    <%= link_to "Sample App", about_path %>
   </div>
-  <!-- Copyright -->
-
 </footer>
-<!-- Footer -->
