@@ -25,7 +25,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     @mentioned_micropost.save
     log_in_as(@user)
     get root_path
-    assert_select 'div.pagination'
+    assert_select 'ul.pagination'
     assert_select 'input[type="file"]'
     # 自分にメンションが付いた投稿の表示
     assert_select 'a[href=?]', "/users/#{@user.id}"
@@ -61,10 +61,10 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
       post microposts_path, params: { micropost: { content: "mentioned_micropostへの返信" } }
     end
     follow_redirect!
-    assert_template 'microposts/_micropost'
+    assert_template 'microposts/_feed_micropost'
     # 無効な送信
     post microposts_path, params: { micropost: { content: "" } }
-    assert_template 'microposts/_micropost'
+    assert_template 'microposts/_feed_micropost'
     assert_select 'div#error_explanation'
   end
 end
