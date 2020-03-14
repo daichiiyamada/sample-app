@@ -1,4 +1,4 @@
-<% if !current_user?(micropost.user) %>
+
   <span class="like" id="like-<%= micropost.id %>">
     <% if micropost.like?(current_user) %>
       <%= form_for(micropost.likes.find_by(user_id: current_user.id), method: :delete, remote: true) do |f| %>
@@ -17,4 +17,3 @@
       <% end %>
     <% end %>
   </span>
-<% end %>
